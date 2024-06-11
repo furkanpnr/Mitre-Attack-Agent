@@ -1,5 +1,16 @@
 from abc import ABC, abstractmethod
 from rich import print
+from modules.proxy.proxy import Proxy
+from enum import Enum
+import pytz
+
+istanbul_tz = pytz.timezone('Europe/Istanbul')
+
+class MitreAttack(Enum):
+    SYS_INFO = "T1082"
+    SCREEN_CAPTURE = "T1113"
+    CLIPBOARD_DATA = "T1115"
+
 
 class IAttack(ABC):
 
@@ -26,9 +37,10 @@ class IAttack(ABC):
 
 class Attack(IAttack):
 
-    def __init__(self, name, description):
+    def __init__(self, name, description, proxy: Proxy):
         self.name = name
         self.description = description
+        self.proxy = proxy
         self.result = {}
         self._running = False
 
